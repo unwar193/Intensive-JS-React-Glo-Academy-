@@ -23,10 +23,11 @@ const isNumber = function (num) {
 const asking = function () {
     title = prompt('Как называется ваш проект?', 'Калькулятор верстки');
     screens = prompt('Какие типы экранов нужно разработать?', "Простые, Сложные, Интерактивные");
-    screenPrice = prompt('Сколько будет стоить данная работа?');
-        while (!isNumber(screenPrice)) {
-            screenPrice = prompt('Сколько будет стоить данная работа?')
-        }
+
+        do {screenPrice = Number(prompt('Сколько будет стоить данная работа?'));}        
+        while (!isNumber(screenPrice));
+        
+
     adaptive = confirm('Нужен ли адаптив на сайте?');
 
 
@@ -44,18 +45,21 @@ const getAllServicePrices = function () {
             let service2= prompt('Какой дополнительный тип услуги нужен?');
         }
 
-        sum += +prompt('Сколько это будет стоить?')
+        do {sum += Number(prompt('Сколько это будет стоить?'));}
+        while (!isNumber(sum));
     }
     return sum
-    // return extraServ1 + extraServ2
 }
 
-function getFullPrice(a, b){
-    return a + b
+function getFullPrice(){
+    return +allServicePrices + +screenPrice
 }
 
-const getServicePercentPrices = function(fullPrice, rollback){
-    return fullPrice - (fullPrice * (rollback/100))
+const getServicePercentPrices = function(){
+    let rollbackMoney = rollback / 100;
+    let rollbackMoney2 = fullPrice * rollbackMoney;
+
+    return  fullPrice - rollbackMoney2
 }
 
 function getTitle(title) {
@@ -82,9 +86,9 @@ const getRollbackMessage = function() {
 
     
 asking();
-allServicePrices = getAllServicePrices();
-fullPrice = getFullPrice(screenPrice, allServicePrices);
-servicePercentPrice = getServicePercentPrices(fullPrice, rollback);
+console.log(allServicePrices = getAllServicePrices());
+fullPrice = getFullPrice();
+servicePercentPrice = getServicePercentPrices();
 
 
 /*Привести строку screens к нижнему регистру и разбить строку на массив, вывести массив в консоль*/
@@ -97,4 +101,4 @@ showTypeOf(title)
 showTypeOf(screenPrice)
 showTypeOf(adaptive)
 
-console.log(title,  screens, screenPrice, adaptive)
+
