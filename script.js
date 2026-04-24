@@ -1,81 +1,73 @@
 'use strict';
-//lesson01 
-// Создание переменных
+
 let title = prompt('Как называется ваш проект?');
 let screens = prompt('Какие типы экранов нужно разработать?', "Простые, Сложные, Интерактивные");
-let screenPrice = prompt('Сколько будет стоить данная работа?', "12000");
+let screenPrice = Number(prompt('Сколько будет стоить данная работа?', "12000"));
 let rollback = 25;
-
 let adaptive = confirm('Нужен ли адаптив на сайте?');
+let service1 = Number(prompt('Какой дополнительный тип услуги нужен?'));
+let servicePrice1 = Number(prompt('Сколько это будет стоить?'));
+let service2 = Number(prompt('Какой дополнительный тип услуги нужен?'));
+let servicePrice2 = Number(prompt('Сколько это будет стоить?'));
 
-let service1 = prompt('Какой дополнительный тип услуги нужен?');
-let servicePrice1 = prompt('Сколько это будет стоить?');
-let service2 = prompt('Какой дополнительный тип услуги нужен?');
-let servicePrice2 = prompt('Сколько это будет стоить?');
+let allServicePrices; 
+let fullPrice;
+let servicePercentPrice;
 
-let fullPrice = Number(screenPrice) + Number(servicePrice1) + Number(servicePrice2);
-let servicePercentPrice = fullPrice - rollback;
+const showTypeOf = function (variable){
+    console.log(variable, typeof variable);
+}
 
+const getAllServicePrices = function(extraServ1, extraServ2){
+    return extraServ1 + extraServ2
+}
 
-/* Вывод модального окна командой alert
-alert ("Hello Glo Academy!");
-Вывод лога в консоль командой console.log
-console.log("title ",title ,"screens ", screens,"screenPrice ", screenPrice, "rollback ", rollback, "fullPrice ", fullPrice,"adaptive ", adaptive);*/
+allServicePrices = getAllServicePrices(servicePrice1, servicePrice2);
 
-//lesson02
-//Присваиваем значения переменным:
-/*title = "glo project";
-screens = "Простые, Сложные, Интерактивные";
-screenPrice = 100;
-rollback = 25;
-fullPrice = 1500;
-adaptive = true;*/
+function getFullPrice(a, b){
+    return a + b
+}
 
-//lesson03
-/*  1) Весь функционал что был ранее оставляем, если что то необходимо удалить, об этом будет написано в задании
-    2) При присваивании уже объявленным пустым переменным какого-либо значения, значение переменной присваиваем сразу при декларации (не нужно создавать пустую переменную а потом ей же присваивать значение)
-    3) Спрашиваем у пользователя “Как называется ваш проект?” и результат сохраняем в переменную title
-    4) Спросить у пользователя “Какие типы экранов нужно разработать?” сохранить в переменную screens (пример: "Простые, Сложные, Интерактивные")
-    5) Спросить у пользователя “Сколько будет стоить данная работа?” и сохранить в переменную screenPrice (пример: 12000)
-    6) Спросить у пользователя “Нужен ли адаптив на сайте?” и сохранить данные в переменной adaptive (булево значение true/false)
-    7) Спросить у пользователя по 2 раза каждый вопрос и записать ответы в разные переменные 1. “Какой дополнительный тип услуги нужен?” (например service1, service2) 
-        2. “Сколько это будет стоить?” (например servicePrice1, servicePrice2) в итоге 4 вопроса и 4 разные переменных, вопросы задаются в такой последовательности 
-        Название - Стоимость - Название - Стоимость
-    8) Вычислить итоговую стоимость работы учитывая стоимость верстки экранов и дополнительных услуг (screenPrice + servicePrice1 + servicePrice2) и результат занести в переменную fullPrice
-    9) Объявить переменную servicePercentPrice и занести в нее итоговую стоимость за вычетом отката посреднику (servicePercentPrice = fullPrice - Откат посреднику), округлив результат 
-        в большую сторону (методы объекта Math в помощь). Вывести servicePercentPrice в консоль.
-    10) Написать конструкцию условий (расчеты приведены в рублях) (вывести в консоль)
-      - Если fullPrice больше 30000, то “Даем скидку в 10%” 
-      - Если fullPrice больше 15000 и меньше 30000, то сообщение “Даем скидку в 5%” 
-      - Если fullPrice меньше 15000 и больше 0 то в консоль вывести сообщение “Скидка не предусмотрена” 
-      - Если отрицательное значение то вывести “Что то пошло не так” 
-      - Учесть варианты 0, 15000 и 30000(к какому уровню не важно) */
+fullPrice = getFullPrice(screenPrice, allServicePrices);
 
-      
-/* Вывести в консоль тип данных значений переменных title, fullPrice, adaptive;*/
-console.log("Тип переменной title: " + typeof(title),"Тип переменной fullPrice: " + typeof(fullPrice), "Тип переменной adaptive: " + typeof(adaptive));
-/*Вывести в консоль длину строки из переменной screens*/
-console.log("Длина строки переменной screens: " + screens.length);
-/*Вывести в консоль “Стоимость верстки экранов (screenPrice) рублей/ долларов/гривен/юани” и “Стоимость разработки сайта (fullPrice) рублей/ долларов/гривен/юани”*/
-console.log("Стоимость верстки экранов " + screenPrice + " рублей");
-console.log("Стоимость разработки сайта " + fullPrice + " рублей");
-/*Привести строку screens к нижнему регистру и разбить строку на массив, вывести массив в консоль*/
-console.log("Массив screens: " + screens.toLowerCase().split(", ")); 
-/*Вывести в консоль Процент отката посреднику за работу (fullPrice * (rollback/100))*/
-console.log("Процент отката посреднику за работу " + fullPrice * (rollback/100) + " рублей"); 
-console.log("Итоговая стоимость за вычетом доли посредника:" + Math.ceil(fullPrice - (fullPrice * (rollback/100))) + " рублей"); 
+const getServicePercentPrices = function(fullPrice, rollback){
+    return fullPrice - (fullPrice * (rollback/100))
+}
 
-if (fullPrice >= 30000) {
-    console.log('Даем скидку в 10%');
-}else if (fullPrice < 0 ) {
-console.log('Что-то пошло не так!')}
-else if (fullPrice <= 15000) {
-console.log('Скидка не предусмотрена')
-} else if (fullPrice <= 30000) {
-console.log('Даем скидку в 5%')
-}; 
+servicePercentPrice = getServicePercentPrices(fullPrice, rollback);
 
 
+function getTitle(title) {
+    let trimmedTitle = title.trim();
+    if (trimmedTitle.length === 0) {
+        return trimmedTitle;
+    }
+    let lowerCaseTitle = trimmedTitle.toLowerCase();
+    let result = lowerCaseTitle[0].toUpperCase() + lowerCaseTitle.slice(1);
+    return result;
+}
 
+const getRollbackMessage = function() {
+        if (fullPrice >= 30000) {
+            return 'Даем скидку в 10%'
+        } else if (fullPrice < 0 ) {
+            return 'Что-то пошло не так!'
+        } else if (fullPrice <= 15000) {
+            return 'Скидка не предусмотрена'
+        } else if (fullPrice <= 30000) {
+            return 'Даем скидку в 5%'
+        }
+}
 
     
+
+
+/*Привести строку screens к нижнему регистру и разбить строку на массив, вывести массив в консоль*/
+console.log("Массив screens: " + screens.toLowerCase().split(", ")); 
+console.log("Итоговая стоимость за вычетом доли посредника:" + servicePercentPrice + " рублей"); 
+
+
+console.log(getRollbackMessage());
+showTypeOf(title)
+showTypeOf(screenPrice)
+showTypeOf(adaptive)
