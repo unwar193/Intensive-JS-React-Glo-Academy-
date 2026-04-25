@@ -78,17 +78,28 @@ const appData = {
         }
     },
 
+    start : function () {
+        appData.asking();
+        appData.allServicePrices = appData.getAllServicePrices();
+        appData.fullPrice = appData.getFullPrice();
+        appData.servicePercentPrice = appData.getServicePercentPrices();
+        appData.title = appData.getTitle();
+        appData.logger();
+    },
+
+    logger : function () {
+        for (let key in appData) {
+            console.log(key + ': ' +  appData[key])
+        }
+    },
 }
 
-
+appData.start();
 
 
     
-appData.asking();
-appData.allServicePrices = appData.getAllServicePrices();
-appData.fullPrice = appData.getFullPrice();
-appData.servicePercentPrice = appData.getServicePercentPrices();
-appData.title = appData.getTitle();
+
+
 
 
 console.log(appData.fullPrice); 
