@@ -102,8 +102,8 @@ appData.start();
 
 
 
-console.log(appData.fullPrice); 
-console.log(appData.servicePercentPrice);
+//console.log(appData.fullPrice); 
+//console.log(appData.servicePercentPrice);
 
 
 
