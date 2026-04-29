@@ -1,5 +1,34 @@
 "use strict";
 
+const title = document.getElementsByTagName('h1')[0].innerHTML;
+const buttonStart = document.getElementsByClassName('handler_btn')[0]; //Кнопка "Рассчитать" 
+const buttonReset = document.getElementsByClassName('handler_btn')[1]; //Кнопка "Сброс"
+const buttonPlus = document.querySelector('.screen-btn');
+const elementsClassPercent = document.querySelectorAll('.percent');
+const elementsClassNumber = document.querySelectorAll('.number ');
+const rangeInput = document.querySelector('.rollback input[type="range"]');
+const spanRangeValue = document.querySelector('.rollback .range-value');
+let screenBlocks = document.querySelectorAll('.screen');
+
+console.log(title);
+console.log(buttonStart);
+console.log(buttonReset);
+console.log(buttonPlus);
+console.log(elementsClassPercent);
+console.log(elementsClassNumber);
+console.log(rangeInput);
+console.log(spanRangeValue);
+console.log(screenBlocks);
+
+const totalInputs = document.getElementsByClassName('total-input');
+for (let element of totalInputs) {
+    console.log(element);
+};
+
+
+
+/*
+
 const appData = {
   title: "",
   screens: [],
@@ -127,3 +156,5 @@ const appData = {
 };
 
 appData.start();
+
+*/
