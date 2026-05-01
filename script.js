@@ -21,29 +21,14 @@ const totalCountRollback = document.getElementsByClassName('total-input')[4];
 let screens = document.querySelectorAll('.screen');
 
 
-//console.log(fullTotalCount);
-// console.log(title);
-// console.log(buttonStart);
-// console.log(buttonReset);
-// console.log(buttonPlus);
-// console.log(elementsClassPercent);
-// console.log(elementsClassNumber);
-// console.log(rangeInput);
-// console.log(spanRangeValue);
-// console.log(screenBlocks);
-
-// const totalInputs = document.getElementsByClassName('total-input');
-// for (let element of totalInputs) {
-//     console.log(element);
-// };
-
-//раздел 
 
 const appData = {
   title: "",
   screens: [],
   screenPrice: 0,
-  rollback: 25,
+  count: {},
+  countScreens: 0,
+  rollback: 0,
   adaptive: true,
   servicesPercent: {},
   servicesNumber: {},
@@ -51,14 +36,13 @@ const appData = {
   servicePricesNumber: 0,
   fullPrice: 0,
   servicePercentPrice: 0,
+  isError: false,
 
   init: function () {
     appData.addTitle()
-
     startBtn.addEventListener('click', appData.start);
     buttonPlus.addEventListener('click', appData.addScreenBlock);
-
-
+    inputRange.addEventListener("input", appData.addInputRange);
   },
 
   addTitle: function () {
@@ -67,8 +51,10 @@ const appData = {
 
   showResult: function () {
     total.value = appData.screenPrice;
+    totalCount.value = appData.countScreens;
     totalCountOther.value = appData.servicePricesPercent + appData.servicePricesNumber;
     fullTotalCount.value = appData.fullPrice;
+    totalCountRollback.value = appData.servicePercentPrice;
   },
 
   addScreenBlock: function () {
@@ -83,13 +69,30 @@ const appData = {
       const select = screen.querySelector('select');
       const input = screen.querySelector('input');
       const selectName = select.options[select.selectedIndex].textContent;
-      appData.screens.push({ 
-        id: index, 
-        name: selectName, 
-        price: +select.value * +input.value 
-      });
+
+      if (select.selectedIndex === 0) {
+        alert("Выберите хотя бы один тип экрана ");
+        appData.isError = true;
+      } else if (input.value === "") {
+        alert("Укажите количество экранов");
+        appData.isError = true;
+      } else {
+        appData.screens.push({
+          id: index,
+          name: selectName,
+          price: +select.value * +input.value,
+        });
+
+      appData.count[selectName] = +input.value;
+      }
+
     })
-   },
+  },
+
+  addInputRange: function () {
+    inputRangeValue.textContent = inputRange.value + "%";
+    appData.rollback = inputRange.value;
+  },
 
   addServices: function () {
 
@@ -112,7 +115,7 @@ const appData = {
         appData.servicesNumber[label.textContent] = +input.value
       }
     })
-   },
+  },
 
   addPrices: function () {
     
@@ -126,40 +129,28 @@ const appData = {
 
     for (let key in appData.servicesPercent) {
       appData.servicePricesPercent += +appData.screenPrice * (appData.servicesPercent[key] / 100)
+    };
+
+    for (let key in appData.count) {
+      appData.countScreens += appData.count[key];
     }
 
-     appData.fullPrice = +appData.screenPrice + appData.servicePricesNumber + appData.servicePricesPercent;
-    // appData.screenPrice = appData.screens.reduce((sum, el) => sum + el.price, 0);
-  },
-
-  getServicePercentPrices: function () {
-    let rollbackMoney = appData.rollback / 100;
-    let rollbackMoney2 = appData.fullPrice * rollbackMoney;
-
-    appData.servicePercentPrice = appData.fullPrice - rollbackMoney2;
-  },
-
-  getRollbackMessage: function () {
-    if (appData.fullPrice >= 30000) {
-      return "Даем скидку в 10%";
-    } else if (appData.fullPrice < 0) {
-      return "Что-то пошло не так!";
-    } else if (appData.fullPrice <= 15000) {
-      return "Скидка не предусмотрена";
-    } else if (appData.fullPrice <= 30000) {
-      return "Даем скидку в 5%";
-    }
+    appData.fullPrice = +appData.screenPrice + appData.servicePricesNumber + appData.servicePricesPercent;
+    
+    appData.servicePercentPrice = Math.ceil(
+      appData.fullPrice - appData.fullPrice * (appData.rollback / 100)
+    );
+     // appData.screenPrice = appData.screens.reduce((sum, el) => sum + el.price, 0);
   },
 
   start: function () {
-    alert('Старт')
     appData.addScreens();
     appData.addServices();
     appData.addPrices();
 
     // appData.getServicePercentPrices();
     // appData.logger();
-    console.log(appData)
+    // console.log(appData)
     appData.showResult();
   },
 
@@ -173,8 +164,7 @@ const appData = {
 appData.init();
 
 
-
-
+/*
   // isNumber: function (num) {
   //   return !isNaN(parseFloat(num)) && isFinite(parseFloat(num));
   // },
@@ -182,3 +172,4 @@ appData.init();
   // isString: function (x) {
   //   return typeof x === "string" && x.trim().length > 0 && !/^\d+$/.test(x.trim());
   // },
+*/
