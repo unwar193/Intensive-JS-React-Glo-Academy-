@@ -11,6 +11,16 @@ const appData = {
   fullPrice: 0,
   servicePercentPrice: 0,
 
+  init: function () {
+    appData.addTitle(),
+    appData.start()
+
+  },
+
+  addTitle: function () {
+    console.log(appData.title);
+  },
+
   isNumber: function (num) {
     return !isNaN(parseFloat(num)) && isFinite(parseFloat(num));
   },
@@ -111,12 +121,12 @@ const appData = {
   },
 
   start: function () {
-    appData.asking();
-    appData.addPrices();
-    appData.getFullPrice();
-    appData.getServicePercentPrices();
-    appData.getTitle();
-    appData.logger();
+    // appData.asking();
+    // appData.addPrices();
+    // appData.getFullPrice();
+    // appData.getServicePercentPrices();
+    // appData.getTitle();
+    // appData.logger();
   },
 
   logger: function () {
@@ -126,4 +136,4 @@ const appData = {
   },
 };
 
-appData.start();
+appData.init();
