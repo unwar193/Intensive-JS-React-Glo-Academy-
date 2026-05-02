@@ -17,6 +17,8 @@ const totalCountOther = document.getElementsByClassName('total-input')[2];
 const fullTotalCount = document.getElementsByClassName('total-input')[3];
 const totalCountRollback = document.getElementsByClassName('total-input')[4];
 
+const allInputText = document.getElementsByClassName("all-inputs");
+const allSelect = document.getElementsByTagName("select");
 
 let screens = document.querySelectorAll('.screen');
 
@@ -40,9 +42,13 @@ const appData = {
 
   init: function () {
     appData.addTitle()
+    appData.addEnable();
     startBtn.addEventListener('click', appData.start);
+    resetBtn.addEventListener("click", appData.reset);
+
     buttonPlus.addEventListener('click', appData.addScreenBlock);
     inputRange.addEventListener("input", appData.addInputRange);
+
   },
 
   addTitle: function () {
@@ -87,6 +93,8 @@ const appData = {
       }
 
     })
+
+    return !appData.isError;
   },
 
   addInputRange: function () {
@@ -147,11 +155,83 @@ const appData = {
     appData.addScreens();
     appData.addServices();
     appData.addPrices();
+    appData.addDisabled();
 
-    // appData.getServicePercentPrices();
-    // appData.logger();
-    // console.log(appData)
     appData.showResult();
+  },
+
+  reset: function () {
+  appData.addEnable();
+
+  total.value = total.defaultValue;
+  totalCount.value = totalCount.defaultValue;
+  totalCountOther.value = totalCountOther.defaultValue;
+  fullTotalCount.value = fullTotalCount.defaultValue;
+  totalCountRollback.value = totalCountRollback.defaultValue;
+
+  appData.title = "";
+  appData.screens = [];
+  appData.screenPrice = 0;
+  appData.adaptive = true;
+  appData.rollback = 0;
+  appData.count = {};
+  appData.countScreens = 0;
+  appData.servicesPercent = {};
+  appData.servicesNumber = {};
+  appData.servicePricesPercent = 0;
+  appData.servicePricesNumber = 0;
+  appData.fullPrice = 0;
+  appData.servicePercentPrice = 0;
+
+  screens = document.querySelectorAll(".screen");
+
+  screens.forEach((screen) => {
+    let select = screen.querySelector("select");
+    select.selectedIndex = "0";
+  });
+
+  for (var i = 1; i < screens.length; i++) {
+    screens[i].remove();
+  }
+
+    let serviceDefaultPrice = document.querySelectorAll(
+      ".main-controls__input"
+    );
+    serviceDefaultPrice.forEach((screen) => {
+      let input = screen.querySelector("input");
+      input.value = input.defaultValue;
+    });
+
+    let serviceUncheck = document.querySelectorAll(".custom-checkbox");
+    serviceUncheck.forEach((box) => (box.checked = false));
+
+    inputRangeValue.textContent = inputRange.defaultValue + "%";
+    inputRange.value = "0";
+  },
+
+  addEnable: function () {
+    [].forEach.call(allInputText, (e) => {
+      e.removeAttribute("disabled");
+    });
+    [].forEach.call(allSelect, (e) => {
+      e.removeAttribute("disabled");
+    });
+
+    startBtn.style.display = "initial";
+    resetBtn.style.display = "none";
+  },
+
+  addDisabled: function () {
+    [].forEach.call(allInputText, (e) => {
+      e.disabled = true;
+    });
+    [].forEach.call(allSelect, (e) => {
+      e.disabled = true;
+    });
+
+    screens.disabled = true;
+    startBtn.style.display = "none";
+    resetBtn.style.display = "initial";
   },
 
   logger: function () {
